@@ -6,8 +6,6 @@
 
 Bienvenido a **Agent Clinic**, una aplicación moderna desarrollada con [Next.js](https://nextjs.org/). 
 
-*(Nota para ti: Aquí puedes añadir 1 o 2 líneas explicando brevemente qué hace tu aplicación. Por ejemplo: "Este proyecto utiliza agentes de IA para gestionar y simular flujos de trabajo en un entorno clínico...")*
-
 ## 🚀 Características Principales
 
 - **Interfaz Moderna:** Construida aprovechando las últimas características de Next.js (App Router).
