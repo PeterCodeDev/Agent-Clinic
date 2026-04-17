@@ -1,6 +1,7 @@
 import { db } from '../db';
 import { visits, ailmentTreatments } from '../db/schema';
 import { eq, and } from 'drizzle-orm';
+import { eventEmitter } from '../events';
 
 export async function processFollowup(visitId: string, outcome: string, outcomeText?: string, metrics?: any) {
   const v = await db.select().from(visits).where(eq(visits.visitId, visitId)).limit(1);
@@ -68,5 +69,6 @@ export async function processFollowup(visitId: string, outcome: string, outcomeT
   }
 
   const finalV = await db.select().from(visits).where(eq(visits.visitId, visitId));
+  eventEmitter.emit('visit_resolved', { visit_id: visitId, patient_id: v[0].patientId, outcome });
   return finalV[0];
 }

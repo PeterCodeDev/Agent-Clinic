@@ -5,6 +5,7 @@ import { eq } from 'drizzle-orm';
 import { runTriageAndDiagnosis } from './triage';
 import { prepareTreatmentCandidates } from './treatment-selection';
 import { runPrescription } from './prescription';
+import { eventEmitter } from '../events';
 
 export async function processVisit(patientId: string, symptomText: string, metadata?: any) {
   const patientRec = await db.select().from(patients).where(eq(patients.patientId, patientId)).limit(1);
@@ -74,5 +75,6 @@ async function finalizeVisit(visitId: string, severity: number, diagnoses: any[]
     }).where(eq(visits.visitId, visitId));
 
     const v = await db.select().from(visits).where(eq(visits.visitId, visitId));
+    eventEmitter.emit('visit_created', { visit_id: visitId, patient_id: v[0].patientId, severity });
     return v[0];
 }
